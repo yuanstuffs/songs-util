@@ -1,4 +1,4 @@
-import { filterSongs, getFileName, resolveFileString, resolvePath } from '#utils/util';
+import { constructFileURL, filterSongs, getFileName, resolvePath } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
 import { copyFile, readdir, rename, rm, utimes } from 'node:fs/promises';
@@ -15,7 +15,7 @@ export class SongsSyncer {
 
 	public async cleanupFiles() {
 		const spinner = new Spinner(`Cleaning files (${this.resolvedDestinationName})...`).start();
-		const files = filterSongs(await readdir(new URL(resolveFileString(this.destination)))); //
+		const files = filterSongs(await readdir(constructFileURL(this.destination))); //
 
 		if (!files.length) {
 			spinner.error({ text: 'No files to remove.' });
@@ -28,7 +28,7 @@ export class SongsSyncer {
 			const filename = getFileName(file);
 			const index = ++i;
 			spinner.update({ text: `[${index}/${files.length}] Removing ${filename}` });
-			const result = await Result.fromAsync(() => rm(new URL(resolveFileString(`${this.destination}/${file}`))));
+			const result = await Result.fromAsync(() => rm(constructFileURL(`${this.destination}/${file}`)));
 			result.match({
 				ok: () => ++success && spinner.update({ text: `[${index}/${files.length}] Removed ${filename}` }),
 				err: () => spinner.error({ text: `Unknown error when removing ${filename}` })
@@ -42,7 +42,7 @@ export class SongsSyncer {
 
 	public async copyFiles() {
 		const spinner = new Spinner(`Copying files (${this.resolvedDestinationName})...`).start();
-		const files = filterSongs(await readdir(new URL(resolveFileString(this.src)))); //
+		const files = filterSongs(await readdir(constructFileURL(this.src))); //
 
 		if (!files.length) {
 			spinner.error({ text: 'The directory does not have any files to copy. Exiting...' });
@@ -52,8 +52,8 @@ export class SongsSyncer {
 		let i = 0;
 		let success = 0;
 		for (const file of files) {
-			const src = new URL(resolveFileString(`${this.src}/${file}`));
-			const dest = new URL(resolveFileString(`${this.destination}/${file}`));
+			const src = constructFileURL(`${this.src}/${file}`);
+			const dest = constructFileURL(`${this.destination}/${file}`);
 			const filename = getFileName(file);
 			const index = ++i;
 			spinner.update({ text: `[${index}/${files.length}] Copying ${filename}` });
@@ -71,7 +71,7 @@ export class SongsSyncer {
 
 	public async updateTime() {
 		const spinner = new Spinner(`Updating timestamp (${this.resolvedDestinationName})...`).start();
-		const files = filterSongs(await readdir(new URL(resolveFileString(this.src))));
+		const files = filterSongs(await readdir(constructFileURL(this.src)));
 
 		if (!files.length) {
 			spinner.error({ text: 'The directory does not have any files to update. Exiting...' });
@@ -81,7 +81,7 @@ export class SongsSyncer {
 		let i = 0;
 		let success = 0;
 		for (const file of files) {
-			const dest = new URL(resolveFileString(`${this.destination}/${file}`));
+			const dest = constructFileURL(`${this.destination}/${file}`);
 			const filename = getFileName(file);
 			const index = ++i;
 			spinner.update({ text: `[${index}/${files.length}] Updating ${filename}` });
@@ -100,7 +100,7 @@ export class SongsSyncer {
 
 	public async removeIndexNumber() {
 		const spinner = new Spinner(`Removing index numbers (${this.resolvedDestinationName})...`).start();
-		const files = filterSongs(await readdir(new URL(resolveFileString(this.src))));
+		const files = filterSongs(await readdir(constructFileURL(this.src)));
 
 		if (!files.length) {
 			spinner.error({ text: 'The directory does not have any files to remove index number. Exiting...' });
@@ -111,8 +111,8 @@ export class SongsSyncer {
 		let success = 0;
 		for (const file of files) {
 			const filename = getFileName(file);
-			const originalFileURL = new URL(resolveFileString(`${this.destination}/${file}`));
-			const dest = new URL(resolveFileString(`${this.destination}/${file.replace(/^0+(\d+)/, '$1')}`));
+			const originalFileURL = constructFileURL(`${this.destination}/${file}`);
+			const dest = constructFileURL(`${this.destination}/${file.replace(/^0+(\d+)/, '$1')}`);
 			// const dest = new URL(resolveFileString(`${this.destination}/${filename}${this.fileExt}`));
 			const index = ++i;
 			spinner.update({ text: `[${index}/${files.length}] Removing index number for ${filename}` });

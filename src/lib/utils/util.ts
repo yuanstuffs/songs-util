@@ -14,10 +14,6 @@ export function filterSongs(songs: string[]) {
 		});
 }
 
-export function resolveFileString<T extends string>(s: T) {
-	return `file://${s}`;
-}
-
 export function constructFileURL<T extends string>(s: T) {
 	return new URL(`file://${s}`);
 }
@@ -36,18 +32,18 @@ export function parseFile(filename: string): IParseFileOutput {
 		return {
 			index: -1,
 			filename: splited[0].trim(),
-			fileType: '.mp3'
+			filetype: '.mp3'
 		};
 
 	return {
 		index: Number(splited[0]),
 		filename: splited[1].trim(),
-		fileType: '.mp3'
+		filetype: '.mp3'
 	};
 }
 
 interface IParseFileOutput {
 	index: number;
 	filename: string;
-	fileType: '.mp3';
+	filetype: '.mp3';
 }
