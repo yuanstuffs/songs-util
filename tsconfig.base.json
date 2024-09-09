@@ -1,0 +1,15 @@
+{
+	"extends": [
+		"@sapphire/ts-config",
+		"@sapphire/ts-config/extra-strict",
+		"@sapphire/ts-config/bundler",
+		"@sapphire/ts-config/decorators",
+		"@sapphire/ts-config/verbatim"
+	],
+	"compilerOptions": {
+		"incremental": false,
+		"noEmit": false,
+		"resolvePackageJsonImports": true,
+		"skipLibCheck": true
+	}
+}
