@@ -2,12 +2,14 @@
   "name": "songs-util",
   "description": "Sync songs to another drive (/) or directory",
   "type": "module",
+  "version": "1.1.0",
   "bin": {
     "songsutil": "./dist/cli.js"
   },
   "imports": {
     "#commands/*": "./dist/commands/*.js",
     "#utils/*": "./dist/lib/utils/*.js",
+    "#utils/commander": "./dist/lib/utils/commander/index.js",
     "#lib/*": "./dist/lib/*.js"
   },
   "scripts": {

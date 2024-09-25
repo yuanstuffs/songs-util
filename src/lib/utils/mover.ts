@@ -1,16 +1,17 @@
-import { constructFileURL, filterSongs, parseFile, resolvePath } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
 import { readdir, rename } from 'node:fs/promises';
 import prompts, { type PromptObject } from 'prompts';
+import { BaseUtil } from '#utils/commander';
+import { constructFileURL, filterSongs, parseFile } from '#utils/util';
 
-export class SongsMover {
+export class SongsMover extends BaseUtil {
 	public constructor(
-		private readonly destination: string,
+		public override readonly destination: string,
 		private readonly filename: string,
 		private readonly index: number
 	) {
-		this.destination = resolvePath(this.destination);
+		super(destination);
 	}
 
 	public async move() {
