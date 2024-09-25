@@ -107,7 +107,6 @@ export class SongsSyncer extends BaseUtil {
 		];
 
 		for (const task of tasks) {
-			if (!task) continue;
 			await task();
 			await setTimeout(this.defaultWaitTimeout);
 		}
