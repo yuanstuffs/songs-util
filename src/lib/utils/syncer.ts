@@ -1,16 +1,17 @@
-import { constructFileURL, filterSongs, getFileName, resolvePath } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
-import { copyFile, readdir, rename, rm, utimes } from 'node:fs/promises';
+import { copyFile, readdir, rm, utimes } from 'node:fs/promises';
 import { setTimeout } from 'node:timers/promises';
+import { BaseUtil } from '#utils/commander';
+import { constructFileURL, filterSongs, getFileName } from '#utils/util';
 
-export class SongsSyncer {
+export class SongsSyncer extends BaseUtil {
 	private readonly defaultWaitTimeout = 1000;
 	public constructor(
 		private readonly src: string,
-		private readonly destination: string
+		public override readonly destination: string
 	) {
-		this.destination = resolvePath(this.destination);
+		super(destination);
 	}
 
 	public async cleanupFiles() {
@@ -98,46 +99,16 @@ export class SongsSyncer {
 		return this;
 	}
 
-	public async removeIndexNumber() {
-		const spinner = new Spinner(`Removing index numbers (${this.resolvedDestinationName})...`).start();
-		const files = filterSongs(await readdir(constructFileURL(this.src)));
-
-		if (!files.length) {
-			spinner.error({ text: 'The directory does not have any files to remove index number. Exiting...' });
-			process.exit(1);
-		}
-
-		let i = 0;
-		let success = 0;
-		for (const file of files) {
-			const filename = getFileName(file);
-			const originalFileURL = constructFileURL(`${this.destination}/${file}`);
-			const dest = constructFileURL(`${this.destination}/${file.replace(/^0+(\d+)/, '$1')}`);
-			// const dest = new URL(resolveFileString(`${this.destination}/${filename}${this.fileExt}`));
-			const index = ++i;
-			spinner.update({ text: `[${index}/${files.length}] Removing index number for ${filename}` });
-			const result = await Result.fromAsync(() => rename(originalFileURL, dest));
-			result.match({
-				ok: () => ++success && spinner.update({ text: `[${index}/${filename}] Removed index number from ${filename}` }),
-				err: () => spinner.error({ text: `Unknown error when removing number from ${filename}` })
-			});
-		}
-
-		if (success) spinner.success({ text: `Removed ${files.length} files of its index number` });
-
-		return this;
-	}
-
 	public async execute() {
 		const tasks = [
 			this.cleanupFiles, //
 			this.copyFiles,
-			this.updateTime,
-			this.removeIndexNumber
+			this.updateTime
 		];
 
 		for (const task of tasks) {
-			await task.call(this);
+			if (!task) continue;
+			await task();
 			await setTimeout(this.defaultWaitTimeout);
 		}
 	}

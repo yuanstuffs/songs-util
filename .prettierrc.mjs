@@ -15,7 +15,8 @@ const prettierConfig = {
 		'^#lib/?(.*)$',
 		'^@[^/]+/?(.*)$', // matches any package that starts with @<any package author>/<any package name>
 		'node:',
-		'^[a-z0-9]'
+		'^[a-z0-9]',
+		'^#utils/?(.*)$'
 	],
 	importOrderSeparation: false,
 	importOrderSortSpecifiers: true,

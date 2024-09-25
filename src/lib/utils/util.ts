@@ -1,7 +1,7 @@
 export const fileExt = '.mp3' as const;
 
 export function getFileName(file: string) {
-	return file.split('.')[1].trim();
+	return parseFile(file).filename;
 }
 
 export function filterSongs(songs: string[]) {
@@ -40,6 +40,10 @@ export function parseFile(filename: string): IParseFileOutput {
 		filename: splited[1].trim(),
 		filetype: '.mp3'
 	};
+}
+
+export function resolvedDestinationName(destination: string) {
+	return destination.split(':\\')[0];
 }
 
 interface IParseFileOutput {
