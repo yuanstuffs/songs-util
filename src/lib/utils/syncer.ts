@@ -3,7 +3,7 @@ import { Result } from '@sapphire/result';
 import { copyFile, readdir, rm, utimes } from 'node:fs/promises';
 import { setTimeout } from 'node:timers/promises';
 import { BaseUtil } from '#utils/commander';
-import { constructFileURL, filterSongs, getFileName } from '#utils/util';
+import { constructFileURL, filterSongs, getFileName, resolvedDestinationName } from '#utils/util';
 
 export class SongsSyncer extends BaseUtil {
 	private readonly defaultWaitTimeout = 1000;
@@ -114,6 +114,6 @@ export class SongsSyncer extends BaseUtil {
 	}
 
 	private get resolvedDestinationName() {
-		return this.destination.split(':\\')[0];
+		return resolvedDestinationName(this.destination);
 	}
 }
