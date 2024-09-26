@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import '#lib/setup';
 import moveCmd from '#commands/move';
+import removeIndexCmd from '#commands/removeindex';
 import sortCmd from '#commands/sort';
 import syncCmd from '#commands/sync';
 import { readFile } from 'node:fs/promises';
@@ -23,7 +24,7 @@ songsUtil
 	.command('sync')
 	.description('Sync the songs to a root of a drive or a directory')
 	.alias('s')
-	.argument('<destination>', 'The destination of the songs to be synced')
+	.argument('<destination>', 'The directory of the songs to be synced')
 	.action(syncCmd);
 
 songsUtil
@@ -40,5 +41,17 @@ songsUtil
 	.alias('st')
 	.argument('<src>', 'The directory containing the files to be sorted.')
 	.action(sortCmd);
+
+songsUtil
+	.command('removeindex')
+	.description(
+		[
+			'Removes all index number from files in a provided directory.', //
+			'Warning: This action cannot be undone.'
+		].join('\n')
+	)
+	.alias('ri')
+	.argument('<destination>', 'The directory containing the files.')
+	.action(removeIndexCmd);
 
 songsUtil.parse(process.argv);

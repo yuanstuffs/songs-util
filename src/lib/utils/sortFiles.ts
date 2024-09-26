@@ -14,7 +14,7 @@ export class SortFiles extends BaseUtil {
 		const files = filterSongs(await readdir(constructFileURL(this.destination)));
 
 		if (!files.length) {
-			spinner.error({ text: 'The directory does not have any files to remove index number. Exiting...' });
+			spinner.error({ text: 'The directory does not have any files. Exiting...' });
 			process.exit(1);
 		}
 
