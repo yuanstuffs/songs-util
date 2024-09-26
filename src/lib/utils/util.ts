@@ -8,13 +8,17 @@ export function filterSongs(songs: string[]) {
 	return songs //
 		.filter((x) => x.endsWith(fileExt))
 		.sort((a, b) => {
-			const numA = Number(a.split('.')[0]);
-			const numB = Number(b.split('.')[0]);
-			return Number.isNaN(numA) ? -1 : isNaN(numB) ? 1 : numA - numB;
+			const numA = parseFile(a).index;
+			const numB = parseFile(b).index;
+
+			if (numA === -1) return 1;
+			if (numB === -1) return -1;
+
+			return numA - numB;
 		});
 }
 
-export function constructFileURL<T extends string>(s: T) {
+export function constructFileURL(s: string) {
 	return new URL(`file://${s}`);
 }
 
@@ -32,13 +36,13 @@ export function parseFile(filename: string): IParseFileOutput {
 		return {
 			index: -1,
 			filename: splited[0].trim(),
-			filetype: '.mp3'
+			filetype: fileExt
 		};
 
 	return {
 		index: Number(splited[0]),
 		filename: splited[1].trim(),
-		filetype: '.mp3'
+		filetype: fileExt
 	};
 }
 

@@ -33,7 +33,7 @@ export class SortFiles extends BaseUtil {
 			});
 		}
 
-		if (success) spinner.success({ text: `Updated ${files.length} files of its index number` });
+		if (success) spinner.success({ text: `Updated ${files.length} files of its index number in ${this.destination}` });
 
 		return undefined;
 	}
