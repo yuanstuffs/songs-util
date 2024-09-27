@@ -23,7 +23,7 @@ export class UserCommand extends Command {
 		];
 
 		for (const task of tasks) {
-			await task(destination);
+			await task.call(this, destination);
 			await setTimeout(this.defaultWaitTimeout);
 		}
 	}
