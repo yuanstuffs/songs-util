@@ -18,10 +18,6 @@ export function filterSongs(songs: string[]) {
 		});
 }
 
-export function constructFileURL(s: string) {
-	return new URL(`file://${s}`);
-}
-
 export function resolvePath(path: string) {
 	if (process.platform === 'win32') {
 		return path.length > 1 ? path : `${path}:\\`;
