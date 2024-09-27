@@ -42,10 +42,6 @@ export function parseFile(filename: string): IParseFileOutput {
 	};
 }
 
-export function resolvedDestinationName(destination: string) {
-	return destination.split(':\\')[0];
-}
-
 interface IParseFileOutput {
 	index: number;
 	filename: string;

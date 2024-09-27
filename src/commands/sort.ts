@@ -3,7 +3,7 @@ import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
 import { readdir, rename } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
-import { fileExt, filterSongs, getFileName, resolvedDestinationName } from '#utils/util';
+import { fileExt, filterSongs, getFileName } from '#utils/util';
 
 export class UserCommand extends Command {
 	public constructor(context: Command.LoaderContext) {
@@ -14,7 +14,7 @@ export class UserCommand extends Command {
 
 	public override async run(destination: string) {
 		destination = this.resolvePath(destination);
-		const spinner = new Spinner(`Sorting (${resolvedDestinationName(destination)})...`).start();
+		const spinner = new Spinner(`Sorting (${destination})...`).start();
 		const files = filterSongs(await readdir(pathToFileURL(destination)));
 
 		if (!files.length) {
