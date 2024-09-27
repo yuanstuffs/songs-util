@@ -13,7 +13,7 @@ export class CommandStore extends Store<Command, 'commands'> {
 		for (const command of this.values()) {
 			const data = command.registerCommand(command.commanderData);
 			data.copyInheritedSettings(rootCommand);
-			data.action(command.run);
+			data.action(command.run.bind(command));
 
 			rootCommand.addCommand(data);
 		}
