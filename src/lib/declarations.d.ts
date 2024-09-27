@@ -1,7 +1,13 @@
+import type { CommandStore } from '#lib/structures';
+
 declare module '@skyra/env-utilities' {
 	export interface Env {
 		SRC_DIR: string;
 	}
 }
 
-export default undefined;
+declare module '@sapphire/pieces' {
+	interface StoreRegistryEntries {
+		commands: CommandStore;
+	}
+}

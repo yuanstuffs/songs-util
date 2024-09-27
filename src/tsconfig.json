@@ -7,7 +7,7 @@
 		"paths": {
 			"#commands/*": ["commands/*"],
 			"#utils/*": ["lib/utils/*"],
-			"#utils/commander": ["lib/utils/commander/index"],
+			"#lib/structures": ["lib/structures/index"],
 			"#lib/*": ["lib/*"]
 		}
 	},

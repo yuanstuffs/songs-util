@@ -1,15 +1,16 @@
 {
   "name": "songs-util",
   "description": "Sync songs to another drive (/) or directory",
-  "type": "module",
+  "main": "dist/cli.js",
   "version": "1.1.0",
+  "type": "module",
   "bin": {
     "songsutil": "./dist/cli.js"
   },
   "imports": {
     "#commands/*": "./dist/commands/*.js",
     "#utils/*": "./dist/lib/utils/*.js",
-    "#utils/commander": "./dist/lib/utils/commander/index.js",
+    "#lib/structures": "./dist/lib/structures/index.js",
     "#lib/*": "./dist/lib/*.js"
   },
   "scripts": {
@@ -39,6 +40,7 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
+    "@sapphire/pieces": "^4.3.1",
     "colorette": "^2.0.20",
     "commander": "^12.1.0",
     "prompts": "^2.4.2"
