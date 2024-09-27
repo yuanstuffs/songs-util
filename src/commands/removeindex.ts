@@ -17,6 +17,7 @@ export class UserCommand extends Command {
 	}
 
 	public override async run(destination: string) {
+		destination = this.resolvePath(destination);
 		const spinner = new Spinner(`Preparing to remove index numbers from ${destination}...`).start();
 		const files = filterSongs(await readdir(pathToFileURL(destination)));
 

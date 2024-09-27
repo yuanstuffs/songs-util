@@ -1,6 +1,7 @@
 import { Piece } from '@sapphire/pieces';
 import { envParseString } from '@skyra/env-utilities';
 import { Command as CommanderCommand } from 'commander';
+import { resolvePath } from '#utils/util';
 
 export abstract class Command<Options extends Command.Options = Command.Options> extends Piece<Options, 'commands'> {
 	public readonly description: string;
@@ -19,6 +20,10 @@ export abstract class Command<Options extends Command.Options = Command.Options>
 	public abstract run(...args: string[]): Promise<void> | void;
 
 	public abstract registerCommand(command: Command.CommanderCommand): Command.CommanderCommand;
+
+	public resolvePath(path: string) {
+		return resolvePath(path);
+	}
 
 	public get srcDir() {
 		return envParseString('SRC_DIR');
