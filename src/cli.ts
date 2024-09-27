@@ -2,6 +2,7 @@
 import '#lib/setup';
 import moveCmd from '#commands/move';
 import removeIndexCmd from '#commands/removeindex';
+import searchCmd from '#commands/search';
 import sortCmd from '#commands/sort';
 import syncCmd from '#commands/sync';
 import { readFile } from 'node:fs/promises';
@@ -53,5 +54,11 @@ songsUtil
 	.alias('ri')
 	.argument('<destination>', 'The directory containing the files.')
 	.action(removeIndexCmd);
+
+songsUtil
+	.command('search')
+	.description('Search for files with the matching query.')
+	.argument('<query>', 'The file name to search for')
+	.action(searchCmd);
 
 songsUtil.parse(process.argv);
