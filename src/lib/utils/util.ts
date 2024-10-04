@@ -27,17 +27,18 @@ export function resolvePath(path: string) {
 }
 
 export function parseFile(filename: string): IParseFileOutput {
-	const splited = filename.split('.');
-	if (splited.length === 2)
+	const name = filename.split('. ').find((x) => x.endsWith('.mp3'))!;
+	const index = filename.match(/^(\d+)\.\s/);
+	if (!index)
 		return {
 			index: -1,
-			filename: splited[0].trim(),
+			filename: name,
 			filetype: fileExt
 		};
 
 	return {
-		index: Number(splited[0]),
-		filename: splited[1].trim(),
+		index: Number(index[1]),
+		filename: name,
 		filetype: fileExt
 	};
 }
