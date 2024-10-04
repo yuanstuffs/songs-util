@@ -30,7 +30,7 @@ export function parseFile(filename: string): IParseFileOutput {
 	const name = filename
 		.split('. ')
 		.find((x) => x.endsWith('.mp3'))!
-		.replaceAll('.mp3', '');
+		.replaceAll('.mp3', ''); // There is some cases that may have '.mp3.mp3'
 	const index = filename.match(/^(\d+)\.\s/);
 	if (!index)
 		return {
