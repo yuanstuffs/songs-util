@@ -1,8 +1,8 @@
 import { Command } from '#lib/structures';
+import { filterSongs, getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { readdir } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
-import { filterSongs, getFileName } from '#utils/util';
 
 export class UserCommand extends Command {
 	public constructor(context: Command.LoaderContext) {

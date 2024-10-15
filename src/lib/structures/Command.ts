@@ -1,7 +1,7 @@
+import { resolvePath } from '#utils/util';
 import { Piece } from '@sapphire/pieces';
 import { envParseString } from '@skyra/env-utilities';
 import { Command as CommanderCommand } from 'commander';
-import { resolvePath } from '#utils/util';
 
 export abstract class Command<Options extends Command.Options = Command.Options> extends Piece<Options, 'commands'> {
 	public readonly description: string;

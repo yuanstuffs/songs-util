@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import '#lib/setup';
 import { CommandStore } from '#lib/structures';
+import { rootCommand } from '#utils/rootCommand';
 import { container, getRootData } from '@sapphire/pieces';
 import { createColors } from 'colorette';
-import { rootCommand } from '#utils/rootCommand';
 
 createColors({ useColor: true });
 
