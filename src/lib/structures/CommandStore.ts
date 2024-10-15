@@ -1,6 +1,6 @@
 import { Command } from '#lib/structures';
-import { Store } from '@sapphire/pieces';
 import { rootCommand } from '#utils/rootCommand';
+import { Store } from '@sapphire/pieces';
 
 export class CommandStore extends Store<Command, 'commands'> {
 	public constructor() {

@@ -1,5 +1,5 @@
-/** @type {import('@trivago/prettier-plugin-sort-imports').PrettierConfig} */
-const prettierConfig = {
+/** @type {import('prettier').Config} */
+export default {
 	endOfLine: 'lf',
 	printWidth: 150,
 	quoteProps: 'as-needed',
@@ -7,20 +7,5 @@ const prettierConfig = {
 	singleQuote: true,
 	tabWidth: 2,
 	trailingComma: 'none',
-	useTabs: true,
-	plugins: ['@trivago/prettier-plugin-sort-imports'],
-	importOrder: [
-		'^#lib/setup',
-		'^#commands/?(.*)$',
-		'^#lib/?(.*)$',
-		'^@[^/]+/?(.*)$', // matches any package that starts with @<any package author>/<any package name>
-		'node:',
-		'^[a-z0-9]',
-		'^#utils/?(.*)$'
-	],
-	importOrderSeparation: false,
-	importOrderSortSpecifiers: true,
-	importOrderParserPlugins: ['typescript', 'decorators']
+	useTabs: true
 };
-
-export default prettierConfig;

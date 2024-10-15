@@ -1,10 +1,10 @@
 import { Command } from '#lib/structures';
+import { filterSongs, getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
 import { copyFile, readdir, rm, utimes } from 'node:fs/promises';
 import { setTimeout } from 'node:timers/promises';
 import { pathToFileURL } from 'node:url';
-import { filterSongs, getFileName } from '#utils/util';
 
 export class UserCommand extends Command {
 	private readonly defaultWaitTimeout = 1000;
