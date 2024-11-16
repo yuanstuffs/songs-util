@@ -1,4 +1,5 @@
 import { Command } from '#lib/structures';
+import { ApplyOptions } from '#utils/decorators';
 import { fileExt, filterSongs, getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
@@ -6,16 +7,13 @@ import { readdir, rename } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import prompts, { type PromptObject } from 'prompts';
 
+@ApplyOptions<Command.Options>({
+	description: [
+		'Removes all index number from files in a provided directory.', //
+		'Warning: This action cannot be undone.'
+	].join('\n')
+})
 export class UserCommand extends Command {
-	public constructor(context: Command.LoaderContext) {
-		super(context, {
-			description: [
-				'Removes all index number from files in a provided directory.', //
-				'Warning: This action cannot be undone.'
-			].join('\n')
-		});
-	}
-
 	public override async run(destination: string) {
 		destination = this.resolvePath(destination);
 		const spinner = new Spinner(`Preparing to remove index numbers from ${destination}...`).start();

@@ -1,4 +1,5 @@
 import { Command } from '#lib/structures';
+import { ApplyOptions } from '#utils/decorators';
 import { filterSongs, parseFile } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
@@ -6,15 +7,12 @@ import { readdir, rename } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import prompts, { type PromptObject } from 'prompts';
 
+@ApplyOptions<Command.Options>({
+	description: "Set a song's index to a specified index"
+})
 export class UserCommand extends Command {
-	public constructor(context: Command.LoaderContext) {
-		super(context, {
-			description: "Set a song's index to a specified index"
-		});
-	}
-
 	public override async run(filename: string, index: string) {
-		const spinner = new Spinner(`Moving the file's index...`).start();
+		const spinner = new Spinner("Moving the file's index...").start();
 		const files = filterSongs(await readdir(pathToFileURL(this.srcDir), { encoding: 'utf-8' })) //
 			.filter((file) => parseFile(file).index !== -1);
 
