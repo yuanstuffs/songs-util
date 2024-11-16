@@ -14,9 +14,9 @@
     "#lib/*": "./dist/lib/*.js"
   },
   "scripts": {
-    "build": "tsc -b src",
-    "clean": "tsc -b src --clean",
-    "watch": "tsc -b src -w",
+    "build": "yarn clean && tsc -b src",
+    "clean": "rimraf dist",
+    "watch": "yarn clean && tsc -b src -w",
     "lint": "eslint src --ext ts --fix",
     "format": "prettier src --write",
     "update": "yarn upgrade-interactive",
@@ -36,6 +36,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
     "typescript": "^5.5.4"
   },
   "dependencies": {
