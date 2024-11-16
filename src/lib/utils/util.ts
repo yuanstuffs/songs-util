@@ -4,8 +4,8 @@ export function getFileName(file: string) {
 	return parseFile(file).filename;
 }
 
-export function filterSongs(songs: string[]) {
-	return songs //
+export function filterSongs(songs: string[], withoutIndexNumber: boolean = false) {
+	const out = songs //
 		.filter((x) => x.endsWith(fileExt))
 		.sort((a, b) => {
 			const numA = parseFile(a).index;
@@ -16,6 +16,10 @@ export function filterSongs(songs: string[]) {
 
 			return numA - numB;
 		});
+
+	if (withoutIndexNumber) return out.map((x) => parseFile(x).filename + fileExt);
+
+	return out;
 }
 
 export function resolvePath(path: string) {
