@@ -69,10 +69,8 @@ export class UserCommand extends Command {
 
 			result.match({
 				ok: () => ++success && spinner.update({ text: `Renamed ${parsed.filename} to index ${ui}` }),
-				err: () => spinner.error({ text: `Unknown error when renaming ${parsed.filename} to ${ui}` }) && process.exit(1)
+				err: () => spinner.error({ text: `Unknown error when renaming ${parsed.filename} to ${ui}` })
 			});
-
-			files[i] = newName;
 		}
 
 		if (success) spinner.success({ text: `Updated ${success} files.` });
