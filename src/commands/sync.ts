@@ -1,4 +1,5 @@
 import { Command } from '#lib/structures';
+import { ApplyOptions } from '#utils/decorators';
 import { filterSongs, getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
@@ -6,13 +7,11 @@ import { copyFile, readdir, rm, utimes } from 'node:fs/promises';
 import { setTimeout } from 'node:timers/promises';
 import { pathToFileURL } from 'node:url';
 
+@ApplyOptions<Command.Options>({
+	description: 'Sync the songs to a root of a drive or a directory'
+})
 export class UserCommand extends Command {
 	private readonly defaultWaitTimeout = 1000;
-	public constructor(context: Command.LoaderContext) {
-		super(context, {
-			description: 'Sync the songs to a root of a drive or a directory'
-		});
-	}
 
 	public override async run(destination: string) {
 		destination = this.resolvePath(destination);

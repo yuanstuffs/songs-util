@@ -1,16 +1,14 @@
 import { Command } from '#lib/structures';
+import { ApplyOptions } from '#utils/decorators';
 import { filterSongs, getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { readdir } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 
+@ApplyOptions<Command.Options>({
+	description: 'Search for files with the matching query.'
+})
 export class UserCommand extends Command {
-	public constructor(context: Command.LoaderContext) {
-		super(context, {
-			description: 'Search for files with the matching query.'
-		});
-	}
-
 	public override async run(query: string) {
 		const spinner = new Spinner(`Searching with the query "${query}"`).start();
 		const files = filterSongs(await readdir(pathToFileURL(this.srcDir)));

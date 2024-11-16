@@ -1,17 +1,15 @@
 import { Command } from '#lib/structures';
+import { ApplyOptions } from '#utils/decorators';
 import { fileExt, filterSongs, getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
 import { readdir, rename } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 
+@ApplyOptions<Command.Options>({
+	description: 'Sort the files in numerical order. Example: 1 to 100 (or beyond)'
+})
 export class UserCommand extends Command {
-	public constructor(context: Command.LoaderContext) {
-		super(context, {
-			description: 'Sort the files in numerical order. Example: 1 to 100 (or beyond)'
-		});
-	}
-
 	public override async run(destination: string) {
 		destination = this.resolvePath(destination);
 		const spinner = new Spinner(`Sorting (${destination})...`).start();
