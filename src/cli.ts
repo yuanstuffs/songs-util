@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env -S node --enable-source-maps
 import '#lib/setup';
 import { CommandStore } from '#lib/structures';
 import { rootCommand } from '#utils/rootCommand';
