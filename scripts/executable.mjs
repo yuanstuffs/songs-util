@@ -9,6 +9,6 @@ const fileExists = await Result.fromAsync(() => access(cli, constants.F_OK));
 
 if (fileExists.isErr()) process.exit(0);
 
-await chmod(cli, 755); // Make cli file executable
+await chmod(cli, 0o775); // Make cli file executable
 
 process.exit(0);
