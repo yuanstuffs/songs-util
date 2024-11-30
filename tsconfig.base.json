@@ -10,6 +10,10 @@
 		"incremental": false,
 		"noEmit": false,
 		"resolvePackageJsonImports": true,
-		"skipLibCheck": true
+		"skipLibCheck": true,
+		"declaration": false,
+		"declarationMap": false,
+		"sourceMap": false,
+		"inlineSourceMap": true
 	}
 }
