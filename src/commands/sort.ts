@@ -3,6 +3,7 @@ import { ApplyOptions } from '#utils/decorators';
 import { fileExt, filterSongs, getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
+import { envParseString } from '@skyra/env-utilities';
 import { readdir, rename } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 
@@ -11,6 +12,7 @@ import { pathToFileURL } from 'node:url';
 })
 export class UserCommand extends Command {
 	public override async run(destination: string) {
+		destination ??= envParseString('SRC_DIR');
 		destination = this.resolvePath(destination);
 		const spinner = new Spinner(`Sorting (${destination})...`).start();
 		const files = filterSongs(await readdir(pathToFileURL(destination)));
@@ -41,6 +43,6 @@ export class UserCommand extends Command {
 	public override registerCommand(command: Command.CommanderCommand): Command.CommanderCommand {
 		return command
 			.alias('st') //
-			.argument('<src>', 'The directory containing the files to be sorted.');
+			.argument('[src]', 'The directory containing the files to be sorted.');
 	}
 }
