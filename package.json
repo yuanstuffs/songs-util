@@ -14,7 +14,8 @@
     "#lib/*": "./dist/lib/*.js"
   },
   "scripts": {
-    "build": "yarn clean && tsc -b src",
+    "build": "yarn clean && tsc -b src && yarn fixfile",
+    "fixfile": "node scripts/executable.mjs",
     "clean": "rimraf dist",
     "watch": "yarn clean && tsc -b src -w",
     "lint": "eslint src --ext ts --fix",
