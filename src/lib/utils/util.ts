@@ -22,14 +22,6 @@ export function filterSongs(songs: string[], withoutIndexNumber: boolean = false
 	return out;
 }
 
-export function resolvePath(path: string) {
-	if (process.platform === 'win32') {
-		return path.length > 1 ? path : `${path}:\\`;
-	}
-
-	return path;
-}
-
 export function parseFile(filename: string): IParseFileOutput {
 	const name = filename
 		.split('. ')

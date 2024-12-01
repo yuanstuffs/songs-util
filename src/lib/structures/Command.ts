@@ -1,28 +1,30 @@
-import { resolvePath } from '#utils/util';
 import { Piece } from '@sapphire/pieces';
+import type { Awaitable } from '@sapphire/utilities';
 import { envParseString } from '@skyra/env-utilities';
 import { Command as CommanderCommand } from 'commander';
 
 export abstract class Command<Options extends Command.Options = Command.Options> extends Piece<Options, 'commands'> {
-	public readonly description: string;
 	public readonly commanderData: Command.CommanderCommand;
 
 	public constructor(context: Piece.LoaderContext, options: Command.Options) {
 		const name = (options.name ?? context.name).toLowerCase();
 		super(context, { name, ...options });
 
-		this.description = options.description;
 		this.commanderData = new CommanderCommand() //
 			.command(name)
-			.description(this.description);
+			.description(options.description);
 	}
 
-	public abstract run(...args: string[]): Promise<void> | void;
+	public abstract run(...args: string[]): Awaitable<void>;
 
 	public abstract registerCommand(command: Command.CommanderCommand): Command.CommanderCommand;
 
 	public resolvePath(path: string) {
-		return resolvePath(path);
+		if (process.platform === 'win32') {
+			return path.length > 1 ? path : `${path}:\\`;
+		}
+
+		return path;
 	}
 
 	public get srcDir() {
