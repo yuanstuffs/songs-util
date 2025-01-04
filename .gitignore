@@ -6,4 +6,5 @@ dist/
 .yarn/install-state.gz
 .yarn/build-state.yml
 
-.env
+# env files
+src/.env.*
