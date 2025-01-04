@@ -3,7 +3,7 @@ import { ApplyOptions } from '#utils/decorators';
 import { filterSongs, getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
-import { copyFile, readdir, rm, utimes } from 'node:fs/promises';
+import { copyFile, readdir, rm } from 'node:fs/promises';
 import { setTimeout } from 'node:timers/promises';
 import { pathToFileURL } from 'node:url';
 
@@ -17,8 +17,7 @@ export class UserCommand extends Command {
 		destination = this.resolvePath(destination);
 		const tasks = [
 			this.cleanupFiles, //
-			this.copyFiles,
-			this.updateTime
+			this.copyFiles
 		];
 
 		for (const task of tasks) {
@@ -85,35 +84,6 @@ export class UserCommand extends Command {
 		}
 
 		if (success) spinner.success({ text: `Copied ${files.length} files to ${destination}` });
-
-		return this;
-	}
-
-	private async updateTime(destination: string) {
-		const spinner = new Spinner(`Updating timestamp (${destination})...`).start();
-		const files = filterSongs(await readdir(pathToFileURL(this.srcDir)));
-
-		if (!files.length) {
-			spinner.error({ text: 'The directory does not have any files to update. Exiting...' });
-			process.exit(1);
-		}
-
-		let i = 0;
-		let success = 0;
-		for (const file of files) {
-			const dest = pathToFileURL(`${destination}/${file}`);
-			const filename = getFileName(file);
-			const index = ++i;
-			spinner.update({ text: `[${index}/${files.length}] Updating ${filename}` });
-			const now = new Date();
-			const result = await Result.fromAsync(() => utimes(dest, now, now));
-			result.match({
-				ok: () => ++success && spinner.update({ text: `[${index}/${filename}] Updated ${filename}` }),
-				err: () => spinner.error({ text: `Unknown error when updating ${filename}` })
-			});
-		}
-
-		if (success) spinner.success({ text: `Updated ${files.length} files timestamp` });
 
 		return this;
 	}
