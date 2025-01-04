@@ -34,6 +34,7 @@ export class UserCommand extends Command {
 	public override registerCommand(command: Command.CommanderCommand): Command.CommanderCommand {
 		return command //
 			.alias('m')
+			.alias('mv')
 			.argument('<filename>', 'The file name')
 			.argument('<index>', 'The index of the file to be set');
 	}
