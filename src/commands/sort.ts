@@ -11,7 +11,7 @@ import { pathToFileURL } from 'node:url';
 	description: 'Sort the files in numerical order. Example: 1 to 100 (or beyond)'
 })
 export class UserCommand extends Command {
-	public override async run(destination: string) {
+	public override async run(destination?: string) {
 		destination ??= envParseString('SRC_DIR');
 		destination = this.resolvePath(destination);
 		const spinner = new Spinner(`Sorting (${destination})...`).start();
