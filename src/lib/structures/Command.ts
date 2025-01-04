@@ -21,7 +21,7 @@ export abstract class Command<Options extends Command.Options = Command.Options>
 
 	public resolvePath(path: string) {
 		if (process.platform === 'win32') {
-			return path.length > 1 ? path : `${path}:\\`;
+			return path.length > 1 ? path : `${path.toUpperCase()}:\\`;
 		}
 
 		return path;
