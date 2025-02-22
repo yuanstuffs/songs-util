@@ -7,6 +7,25 @@ on:
   pull_request:
 
 jobs:
+  TypeChecking:
+    name: Typecheck TypeScript code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v4
+      - name: Add problem matchers
+        run: echo "::add-matcher::.github/problemMatchers/tsc.json"
+      - name: Use Node.js v20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+          registry-url: https://registry.npmjs.org/
+      - name: Install Dependencies
+        run: yarn --immutable
+      - name: Run Type Checking
+        run: yarn typecheck
+
   Linting:
     name: Linting
     runs-on: ubuntu-latest

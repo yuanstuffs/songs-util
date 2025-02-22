@@ -20,6 +20,7 @@
     "lint": "eslint src --ext ts --fix",
     "format": "prettier src --write",
     "update": "yarn upgrade-interactive",
+    "typecheck": "tsc -b src",
     "cli": "node --enable-source-maps dist/cli.js"
   },
   "dependencies": {
