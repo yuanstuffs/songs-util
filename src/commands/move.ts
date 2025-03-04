@@ -17,7 +17,7 @@ export class UserCommand extends Command {
 			.filter((file) => parseFile(file).index !== -1);
 
 		if (!files.length) {
-			spinner.error({ text: 'No files to remove.' });
+			spinner.error({ text: 'No files to move.' });
 			process.exit(1);
 		}
 
@@ -35,7 +35,7 @@ export class UserCommand extends Command {
 		return command //
 			.alias('m')
 			.alias('mv')
-			.argument('<filename>', 'The file name')
+			.argument('<filename>', 'The file name (case sensitive)')
 			.argument('<index>', 'The index of the file to be set');
 	}
 
