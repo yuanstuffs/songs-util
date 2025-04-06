@@ -24,7 +24,7 @@
     "cli": "node --enable-source-maps dist/cli.js"
   },
   "dependencies": {
-    "@sapphire/pieces": "^4.3.1",
+    "@sapphire/pieces": "^4.3.2",
     "@sapphire/utilities": "^3.18.2",
     "colorette": "^2.0.20",
     "commander": "^13.1.0",
