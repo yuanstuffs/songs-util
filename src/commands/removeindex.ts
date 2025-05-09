@@ -4,7 +4,6 @@ import { fileExt, filterSongs, getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
 import { readdir, rename } from 'node:fs/promises';
-import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 import prompts, { type PromptObject } from 'prompts';
 

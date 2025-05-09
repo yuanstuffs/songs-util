@@ -4,7 +4,6 @@ import { filterSongs } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { gray, green, red, yellow } from 'colorette';
 import { readdir } from 'node:fs/promises';
-import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 
 @ApplyOptions<Command.Options>({
