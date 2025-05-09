@@ -4,6 +4,7 @@ import { fileExt, filterSongs, getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
 import { readdir, rename } from 'node:fs/promises';
+import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 import prompts, { type PromptObject } from 'prompts';
 
@@ -17,6 +18,12 @@ export class UserCommand extends Command {
 	public override async run(destination: string) {
 		destination = this.resolvePath(destination);
 		const spinner = new Spinner(`Preparing to remove index numbers from ${destination}...`).start();
+
+		if (!(await this.ensureDirExists(destination))) {
+			console.error(this.makePathNotExistsMessage(destination));
+			process.exit(1);
+		}
+
 		const files = filterSongs(await readdir(pathToFileURL(destination)));
 
 		if (!files.length) {

@@ -15,6 +15,12 @@ export class UserCommand extends Command {
 
 	public override async run(destination: string) {
 		destination = this.resolvePath(destination);
+
+		if (!(await this.ensureDirExists(destination))) {
+			console.error(this.makePathNotExistsMessage(destination));
+			process.exit(1);
+		}
+
 		const tasks = [this.cleanupFiles, this.copyFiles];
 
 		for (const task of tasks) {

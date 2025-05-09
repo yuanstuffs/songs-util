@@ -1,7 +1,10 @@
 import { Piece } from '@sapphire/pieces';
+import { Result } from '@sapphire/result';
 import type { Awaitable } from '@sapphire/utilities';
 import { envParseString } from '@skyra/env-utilities';
+import * as colorette from 'colorette';
 import { Command as CommanderCommand } from 'commander';
+import { access, constants } from 'node:fs/promises';
 
 export abstract class Command<Options extends Command.Options = Command.Options> extends Piece<Options, 'commands'> {
 	public readonly commanderData: Command.CommanderCommand;
@@ -27,8 +30,21 @@ export abstract class Command<Options extends Command.Options = Command.Options>
 		return path;
 	}
 
-	public get srcDir() {
+	public get srcDir(): string {
 		return envParseString('SRC_DIR');
+	}
+
+	public async ensureDirExists(path: string): Promise<boolean> {
+		const result = await Result.fromAsync(() => access(path, constants.F_OK));
+
+		return result.match({
+			err: () => false,
+			ok: () => true
+		});
+	}
+
+	public makePathNotExistsMessage(path: string): string {
+		return `${colorette.cyan(path)} ${colorette.red('could not be found.')}`;
 	}
 }
 

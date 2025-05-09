@@ -11,6 +11,12 @@ import { pathToFileURL } from 'node:url';
 export class UserCommand extends Command {
 	public override async run(query: string) {
 		const spinner = new Spinner(`Searching with the query "${query}"`).start();
+
+		if (!(await this.ensureDirExists(this.srcDir))) {
+			console.error(this.makePathNotExistsMessage(this.srcDir));
+			process.exit(1);
+		}
+
 		const files = filterSongs(await readdir(pathToFileURL(this.srcDir)));
 
 		if (!files.length) {

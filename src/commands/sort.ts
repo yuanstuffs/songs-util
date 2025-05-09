@@ -15,6 +15,12 @@ export class UserCommand extends Command {
 		destination ??= envParseString('SRC_DIR');
 		destination = this.resolvePath(destination);
 		const spinner = new Spinner(`Sorting (${destination})...`).start();
+
+		if (!(await this.ensureDirExists(destination))) {
+			console.error(this.makePathNotExistsMessage(destination));
+			process.exit(1);
+		}
+
 		const files = filterSongs(await readdir(pathToFileURL(destination)));
 
 		if (!files.length) {

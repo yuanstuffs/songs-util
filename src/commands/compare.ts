@@ -4,6 +4,7 @@ import { filterSongs } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { gray, green, red, yellow } from 'colorette';
 import { readdir } from 'node:fs/promises';
+import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 
 @ApplyOptions<Command.Options>({
@@ -16,6 +17,17 @@ export class UserCommand extends Command {
 	public override async run(targetDir: string) {
 		targetDir = this.resolvePath(targetDir);
 		const spinner = new Spinner(`Comparing files between src dir and ${targetDir}`).start();
+
+		if (!(await this.ensureDirExists(this.srcDir))) {
+			console.error(this.makePathNotExistsMessage(this.srcDir));
+			process.exit(1);
+		}
+
+		if (!(await this.ensureDirExists(targetDir))) {
+			console.error(this.makePathNotExistsMessage(targetDir));
+			process.exit(1);
+		}
+
 		const srcFiles = filterSongs(await readdir(pathToFileURL(this.srcDir), { encoding: 'utf-8' }), true);
 		const targetFiles = filterSongs(await readdir(pathToFileURL(targetDir), { encoding: 'utf-8' }), true);
 

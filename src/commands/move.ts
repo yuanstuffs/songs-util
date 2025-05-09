@@ -13,6 +13,12 @@ import prompts, { type PromptObject } from 'prompts';
 export class UserCommand extends Command {
 	public override async run(filename: string, index: string) {
 		const spinner = new Spinner("Moving the file's index...").start();
+
+		if (!(await this.ensureDirExists(this.srcDir))) {
+			console.error(this.makePathNotExistsMessage(this.srcDir));
+			process.exit(1);
+		}
+
 		const files = filterSongs(await readdir(pathToFileURL(this.srcDir), { encoding: 'utf-8' })) //
 			.filter((file) => parseFile(file).index !== -1);
 
