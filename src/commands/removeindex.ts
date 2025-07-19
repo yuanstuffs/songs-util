@@ -1,9 +1,9 @@
 import { Command } from '#lib/structures';
 import { ApplyOptions } from '#utils/decorators';
-import { fileExt, filterSongs, getFileName } from '#utils/util';
+import { fileExt, getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
-import { readdir, rename } from 'node:fs/promises';
+import { rename } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import prompts, { type PromptObject } from 'prompts';
 
@@ -23,7 +23,7 @@ export class UserCommand extends Command {
 			process.exit(1);
 		}
 
-		const files = filterSongs(await readdir(pathToFileURL(destination)));
+		const files = await this.getFilesInDirectory(destination);
 
 		if (!files.length) {
 			spinner.error({ text: 'The directory does not have any files to remove index number. Exiting...' });

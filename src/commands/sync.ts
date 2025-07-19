@@ -1,9 +1,9 @@
 import { Command } from '#lib/structures';
 import { ApplyOptions } from '#utils/decorators';
-import { filterSongs, getFileName } from '#utils/util';
+import { getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
-import { copyFile, readdir, rm } from 'node:fs/promises';
+import { copyFile, rm } from 'node:fs/promises';
 import { setTimeout } from 'node:timers/promises';
 import { pathToFileURL } from 'node:url';
 
@@ -37,7 +37,7 @@ export class UserCommand extends Command {
 
 	private async cleanupFiles(destination: string) {
 		const spinner = new Spinner(`Cleaning files (${destination})...`).start();
-		const files = filterSongs(await readdir(pathToFileURL(destination))); //
+		const files = await this.getFilesInDirectory(destination);
 
 		if (!files.length) {
 			spinner.error({ text: 'No files to remove.' });
@@ -64,7 +64,7 @@ export class UserCommand extends Command {
 
 	private async copyFiles(destination: string) {
 		const spinner = new Spinner(`Copying files (${destination})...`).start();
-		const files = filterSongs(await readdir(pathToFileURL(this.srcDir))); //
+		const files = await this.getFilesInDirectory(this.srcDir);
 
 		if (!files.length) {
 			spinner.error({ text: 'The directory does not have any files to copy. Exiting...' });

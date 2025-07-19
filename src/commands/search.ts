@@ -1,9 +1,7 @@
 import { Command } from '#lib/structures';
 import { ApplyOptions } from '#utils/decorators';
-import { filterSongs, getFileName } from '#utils/util';
+import { getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
-import { readdir } from 'node:fs/promises';
-import { pathToFileURL } from 'node:url';
 
 @ApplyOptions<Command.Options>({
 	description: 'Search for files with the matching query.'
@@ -17,7 +15,7 @@ export class UserCommand extends Command {
 			process.exit(1);
 		}
 
-		const files = filterSongs(await readdir(pathToFileURL(this.srcDir)));
+		const files = await this.getFilesInDirectory();
 
 		if (!files.length) {
 			spinner.error({ text: 'The directory does not contain any files. Exiting...' });

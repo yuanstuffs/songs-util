@@ -1,10 +1,12 @@
+import { filterSongs } from '#utils/util';
 import { Piece } from '@sapphire/pieces';
 import { Result } from '@sapphire/result';
 import type { Awaitable } from '@sapphire/utilities';
 import { envParseString } from '@skyra/env-utilities';
 import * as colorette from 'colorette';
 import { Command as CommanderCommand } from 'commander';
-import { access, constants } from 'node:fs/promises';
+import { access, constants, readdir } from 'node:fs/promises';
+import { pathToFileURL } from 'node:url';
 
 export abstract class Command<Options extends Command.Options = Command.Options> extends Piece<Options, 'commands'> {
 	public readonly commanderData: Command.CommanderCommand;
@@ -41,6 +43,13 @@ export abstract class Command<Options extends Command.Options = Command.Options>
 			err: () => false,
 			ok: () => true
 		});
+	}
+
+	public async getFilesInDirectory(
+		directory: string = this.srcDir, //
+		withoutIndexNumber: boolean = true
+	): Promise<string[]> {
+		return filterSongs(await readdir(pathToFileURL(directory), { encoding: 'utf-8' }), withoutIndexNumber);
 	}
 
 	public makePathNotExistsMessage(path: string): string {

@@ -1,10 +1,7 @@
 import { Command } from '#lib/structures';
 import { ApplyOptions } from '#utils/decorators';
-import { filterSongs } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { gray, green, red, yellow } from 'colorette';
-import { readdir } from 'node:fs/promises';
-import { pathToFileURL } from 'node:url';
 
 @ApplyOptions<Command.Options>({
 	description: [
@@ -27,8 +24,8 @@ export class UserCommand extends Command {
 			process.exit(1);
 		}
 
-		const srcFiles = filterSongs(await readdir(pathToFileURL(this.srcDir), { encoding: 'utf-8' }), true);
-		const targetFiles = filterSongs(await readdir(pathToFileURL(targetDir), { encoding: 'utf-8' }), true);
+		const srcFiles = await this.getFilesInDirectory();
+		const targetFiles = await this.getFilesInDirectory(targetDir);
 
 		if (!srcFiles.length) {
 			spinner.error({ text: 'The src directory does not have any files. Exiting...' });

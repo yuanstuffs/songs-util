@@ -1,9 +1,9 @@
 import { Command } from '#lib/structures';
 import { ApplyOptions } from '#utils/decorators';
-import { filterSongs, parseFile } from '#utils/util';
+import { parseFile } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
-import { readdir, rename } from 'node:fs/promises';
+import { rename } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import prompts, { type PromptObject } from 'prompts';
 
@@ -19,8 +19,7 @@ export class UserCommand extends Command {
 			process.exit(1);
 		}
 
-		const files = filterSongs(await readdir(pathToFileURL(this.srcDir), { encoding: 'utf-8' })) //
-			.filter((file) => parseFile(file).index !== -1);
+		const files = (await this.getFilesInDirectory()).filter((file) => parseFile(file).index !== -1);
 
 		if (!files.length) {
 			spinner.error({ text: 'No files to move.' });
