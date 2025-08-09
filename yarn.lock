@@ -732,12 +732,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.19.9":
-  version: 20.19.9
-  resolution: "@types/node@npm:20.19.9"
+"@types/node@npm:20.19.10":
+  version: 20.19.10
+  resolution: "@types/node@npm:20.19.10"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10c0/c6738131f1698258a5ac1e0185e4fc56977f7f566cd0ee11167f93f2339478470257bd82c5e1908a936a204e0ad7996d741356a1a07c04997a236161ea23a874
+  checksum: 10c0/dac81561f6d7cbd37c876c4023846095a71d8b62df52c8b6b32de67f6ca6aaf2ffd0c1e02ede6d2c8af41e934ce2005f67b8b6348b79dd355c05f3192aa7b59a
   languageName: node
   linkType: hard
 
@@ -1347,9 +1347,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prettier@npm:^5.4.0, eslint-plugin-prettier@npm:^5.5.3":
-  version: 5.5.3
-  resolution: "eslint-plugin-prettier@npm:5.5.3"
+"eslint-plugin-prettier@npm:^5.4.0, eslint-plugin-prettier@npm:^5.5.4":
+  version: 5.5.4
+  resolution: "eslint-plugin-prettier@npm:5.5.4"
   dependencies:
     prettier-linter-helpers: "npm:^1.0.0"
     synckit: "npm:^0.11.7"
@@ -1363,7 +1363,7 @@ __metadata:
       optional: true
     eslint-config-prettier:
       optional: true
-  checksum: 10c0/7524e381b400fec67dd2bd1a71779c220a5410f0063cd220d144431f291ec800bee1985709ef0dd38d666d01e0e53bec93824063912784d4021db8473fafe73e
+  checksum: 10c0/5cc780e0ab002f838ad8057409e86de4ff8281aa2704a50fa8511abff87028060c2e45741bc9cbcbd498712e8d189de8026e70aed9e20e50fe5ba534ee5a8442
   languageName: node
   linkType: hard
 
@@ -2774,7 +2774,7 @@ __metadata:
     "@sapphire/utilities": "npm:^3.18.2"
     "@skyra/env-utilities": "npm:^2.0.1"
     "@swc/core": "npm:^1.13.3"
-    "@types/node": "npm:20.19.9"
+    "@types/node": "npm:20.19.10"
     "@types/prompts": "npm:^2.4.9"
     "@typescript-eslint/eslint-plugin": "npm:^7.18.0"
     "@typescript-eslint/parser": "npm:^7.18.0"
@@ -2782,7 +2782,7 @@ __metadata:
     commander: "npm:^14.0.0"
     eslint: "npm:^8.57.1"
     eslint-config-prettier: "npm:^10.1.8"
-    eslint-plugin-prettier: "npm:^5.5.3"
+    eslint-plugin-prettier: "npm:^5.5.4"
     prettier: "npm:^3.6.2"
     prompts: "npm:^2.4.2"
     rimraf: "npm:^6.0.1"
