@@ -33,10 +33,10 @@
   "devDependencies": {
     "@favware/colorette-spinner": "^1.0.1",
     "@sapphire/eslint-config": "^5.0.6",
-    "@sapphire/result": "^2.7.2",
+    "@sapphire/result": "^2.7.3",
     "@sapphire/ts-config": "^5.0.1",
     "@skyra/env-utilities": "^2.0.1",
-    "@swc/core": "^1.13.5",
+    "@swc/core": "^1.13.20",
     "@types/node": "20.19.17",
     "@types/prompts": "^2.4.9",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
@@ -55,5 +55,5 @@
   ],
   "author": "yuanstuffs",
   "license": "Apache-2.0",
-  "packageManager": "yarn@4.10.0"
+  "packageManager": "yarn@4.10.3"
 }
