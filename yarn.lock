@@ -584,90 +584,90 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-arm64@npm:1.13.20":
-  version: 1.13.20
-  resolution: "@swc/core-darwin-arm64@npm:1.13.20"
+"@swc/core-darwin-arm64@npm:1.13.21":
+  version: 1.13.21
+  resolution: "@swc/core-darwin-arm64@npm:1.13.21"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-x64@npm:1.13.20":
-  version: 1.13.20
-  resolution: "@swc/core-darwin-x64@npm:1.13.20"
+"@swc/core-darwin-x64@npm:1.13.21":
+  version: 1.13.21
+  resolution: "@swc/core-darwin-x64@npm:1.13.21"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm-gnueabihf@npm:1.13.20":
-  version: 1.13.20
-  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.13.20"
+"@swc/core-linux-arm-gnueabihf@npm:1.13.21":
+  version: 1.13.21
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.13.21"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-gnu@npm:1.13.20":
-  version: 1.13.20
-  resolution: "@swc/core-linux-arm64-gnu@npm:1.13.20"
+"@swc/core-linux-arm64-gnu@npm:1.13.21":
+  version: 1.13.21
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.13.21"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-musl@npm:1.13.20":
-  version: 1.13.20
-  resolution: "@swc/core-linux-arm64-musl@npm:1.13.20"
+"@swc/core-linux-arm64-musl@npm:1.13.21":
+  version: 1.13.21
+  resolution: "@swc/core-linux-arm64-musl@npm:1.13.21"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-gnu@npm:1.13.20":
-  version: 1.13.20
-  resolution: "@swc/core-linux-x64-gnu@npm:1.13.20"
+"@swc/core-linux-x64-gnu@npm:1.13.21":
+  version: 1.13.21
+  resolution: "@swc/core-linux-x64-gnu@npm:1.13.21"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-musl@npm:1.13.20":
-  version: 1.13.20
-  resolution: "@swc/core-linux-x64-musl@npm:1.13.20"
+"@swc/core-linux-x64-musl@npm:1.13.21":
+  version: 1.13.21
+  resolution: "@swc/core-linux-x64-musl@npm:1.13.21"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-win32-arm64-msvc@npm:1.13.20":
-  version: 1.13.20
-  resolution: "@swc/core-win32-arm64-msvc@npm:1.13.20"
+"@swc/core-win32-arm64-msvc@npm:1.13.21":
+  version: 1.13.21
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.13.21"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-win32-ia32-msvc@npm:1.13.20":
-  version: 1.13.20
-  resolution: "@swc/core-win32-ia32-msvc@npm:1.13.20"
+"@swc/core-win32-ia32-msvc@npm:1.13.21":
+  version: 1.13.21
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.13.21"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@swc/core-win32-x64-msvc@npm:1.13.20":
-  version: 1.13.20
-  resolution: "@swc/core-win32-x64-msvc@npm:1.13.20"
+"@swc/core-win32-x64-msvc@npm:1.13.21":
+  version: 1.13.21
+  resolution: "@swc/core-win32-x64-msvc@npm:1.13.21"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core@npm:^1.13.20":
-  version: 1.13.20
-  resolution: "@swc/core@npm:1.13.20"
+"@swc/core@npm:^1.13.21":
+  version: 1.13.21
+  resolution: "@swc/core@npm:1.13.21"
   dependencies:
-    "@swc/core-darwin-arm64": "npm:1.13.20"
-    "@swc/core-darwin-x64": "npm:1.13.20"
-    "@swc/core-linux-arm-gnueabihf": "npm:1.13.20"
-    "@swc/core-linux-arm64-gnu": "npm:1.13.20"
-    "@swc/core-linux-arm64-musl": "npm:1.13.20"
-    "@swc/core-linux-x64-gnu": "npm:1.13.20"
-    "@swc/core-linux-x64-musl": "npm:1.13.20"
-    "@swc/core-win32-arm64-msvc": "npm:1.13.20"
-    "@swc/core-win32-ia32-msvc": "npm:1.13.20"
-    "@swc/core-win32-x64-msvc": "npm:1.13.20"
+    "@swc/core-darwin-arm64": "npm:1.13.21"
+    "@swc/core-darwin-x64": "npm:1.13.21"
+    "@swc/core-linux-arm-gnueabihf": "npm:1.13.21"
+    "@swc/core-linux-arm64-gnu": "npm:1.13.21"
+    "@swc/core-linux-arm64-musl": "npm:1.13.21"
+    "@swc/core-linux-x64-gnu": "npm:1.13.21"
+    "@swc/core-linux-x64-musl": "npm:1.13.21"
+    "@swc/core-win32-arm64-msvc": "npm:1.13.21"
+    "@swc/core-win32-ia32-msvc": "npm:1.13.21"
+    "@swc/core-win32-x64-msvc": "npm:1.13.21"
     "@swc/counter": "npm:^0.1.3"
     "@swc/types": "npm:^0.1.25"
   peerDependencies:
@@ -696,7 +696,7 @@ __metadata:
   peerDependenciesMeta:
     "@swc/helpers":
       optional: true
-  checksum: 10c0/ef9ed965f20fe8331ef6b279b30ae2421ec9cd4105cfc0ac4645ae716844dfa9998162b132abbd6e8ccfb91deb263861792cf815fdcdcb7a011384e3505e0532
+  checksum: 10c0/b4d650b1ef797c0076d2a2225c2415e99e99b714578f43db40b2a913bf62c327d74b1c097d8d980d75b7cbac0a8bc63834bdcdd26a58c0fcb41daad36bd307cf
   languageName: node
   linkType: hard
 
@@ -732,12 +732,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.19.22":
-  version: 20.19.22
-  resolution: "@types/node@npm:20.19.22"
+"@types/node@npm:20.19.23":
+  version: 20.19.23
+  resolution: "@types/node@npm:20.19.23"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10c0/a5d6cfc483c99580503ef4bd3937b5db1c940a125e2d12c1d25cdc61734089fb349755e1fcd019cb3f7e05f53509dcf8282e1c37e2224f4d9cb79147aa8ea820
+  checksum: 10c0/a230f2ad8a5c10f3c5b2e31112e49b61f2cc9e7eacb95960b555ef133c0276c52b7f3841af744762ce355009fc03520ab7af5645cd877ab8699e45412bccf9b8
   languageName: node
   linkType: hard
 
@@ -1100,10 +1100,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^14.0.1":
-  version: 14.0.1
-  resolution: "commander@npm:14.0.1"
-  checksum: 10c0/64439c0651ddd01c1d0f48c8f08e97c18a0a1fa693879451f1203ad01132af2c2aa85da24cf0d8e098ab9e6dc385a756be670d2999a3c628ec745c3ec124587b
+"commander@npm:^14.0.2":
+  version: 14.0.2
+  resolution: "commander@npm:14.0.2"
+  checksum: 10c0/245abd1349dbad5414cb6517b7b5c584895c02c4f7836ff5395f301192b8566f9796c82d7bd6c92d07eba8775fe4df86602fca5d86d8d10bcc2aded1e21c2aeb
   languageName: node
   linkType: hard
 
@@ -2773,13 +2773,13 @@ __metadata:
     "@sapphire/ts-config": "npm:^5.0.1"
     "@sapphire/utilities": "npm:^3.18.2"
     "@skyra/env-utilities": "npm:^2.0.1"
-    "@swc/core": "npm:^1.13.20"
-    "@types/node": "npm:20.19.22"
+    "@swc/core": "npm:^1.13.21"
+    "@types/node": "npm:20.19.23"
     "@types/prompts": "npm:^2.4.9"
     "@typescript-eslint/eslint-plugin": "npm:^7.18.0"
     "@typescript-eslint/parser": "npm:^7.18.0"
     colorette: "npm:^2.0.20"
-    commander: "npm:^14.0.1"
+    commander: "npm:^14.0.2"
     eslint: "npm:^8.57.1"
     eslint-config-prettier: "npm:^10.1.8"
     eslint-plugin-prettier: "npm:^5.5.4"
