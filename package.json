@@ -36,7 +36,7 @@
     "@sapphire/result": "^2.7.3",
     "@sapphire/ts-config": "^5.0.1",
     "@skyra/env-utilities": "^2.0.1",
-    "@swc/core": "^1.14.0",
+    "@swc/core": "^1.15.1",
     "@types/node": "20.19.24",
     "@types/prompts": "^2.4.9",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
@@ -55,5 +55,5 @@
   ],
   "author": "yuanstuffs",
   "license": "Apache-2.0",
-  "packageManager": "yarn@4.10.3"
+  "packageManager": "yarn@4.11.0"
 }
