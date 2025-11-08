@@ -566,10 +566,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sapphire/result@npm:^2.7.3":
-  version: 2.7.3
-  resolution: "@sapphire/result@npm:2.7.3"
-  checksum: 10c0/378c697101e394284b09d4aa5833006a74c87b431620cec2f539f614994584cc54a2d0f76abb4040f9dba1827d4624bc2ab5683e4c8bec1349b1176ef2476065
+"@sapphire/result@npm:^2.8.0":
+  version: 2.8.0
+  resolution: "@sapphire/result@npm:2.8.0"
+  checksum: 10c0/64d3ad3b73d5e20d5356d1fd5cea322a882e0afb21de4660500682b6e1998b3e20b73cfce9da8980c6dbc4b5e094f791deaeb74a2ce3e720681081030b855c3d
   languageName: node
   linkType: hard
 
@@ -2785,7 +2785,7 @@ __metadata:
     "@favware/colorette-spinner": "npm:^1.0.1"
     "@sapphire/eslint-config": "npm:^5.0.6"
     "@sapphire/pieces": "npm:^4.4.1"
-    "@sapphire/result": "npm:^2.7.3"
+    "@sapphire/result": "npm:^2.8.0"
     "@sapphire/ts-config": "npm:^5.0.1"
     "@sapphire/utilities": "npm:^3.18.2"
     "@skyra/env-utilities": "npm:^2.0.1"
