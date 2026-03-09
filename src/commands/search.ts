@@ -15,7 +15,7 @@ export class UserCommand extends Command {
 			process.exit(1);
 		}
 
-		const files = await this.getFilesInDirectory();
+		const files = await this.getFilesInDirectory(this.srcDir);
 
 		if (!files.length) {
 			spinner.error({ text: 'The directory does not contain any files. Exiting...' });

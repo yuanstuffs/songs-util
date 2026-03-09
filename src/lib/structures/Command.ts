@@ -47,7 +47,7 @@ export abstract class Command<Options extends Command.Options = Command.Options>
 
 	public async getFilesInDirectory(
 		directory: string = this.srcDir, //
-		withoutIndexNumber: boolean = true
+		withoutIndexNumber: boolean = false
 	): Promise<string[]> {
 		return filterSongs(await readdir(pathToFileURL(directory), { encoding: 'utf-8' }), withoutIndexNumber);
 	}

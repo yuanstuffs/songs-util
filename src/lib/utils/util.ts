@@ -1,4 +1,5 @@
-export const fileExt = '.mp3' as const;
+// export const fileExt = '.mp3' as const;
+export const fileExts = ['.mp3', '.m4a'] as const;
 
 export function getFileName(file: string) {
 	return parseFile(file).filename;
@@ -6,10 +7,9 @@ export function getFileName(file: string) {
 
 export function filterSongs(songs: string[], withoutIndexNumber: boolean = false) {
 	const out = songs //
-		.filter((x) => x.endsWith(fileExt))
+		.filter((x) => fileExts.some((ext) => x.endsWith(ext)))
 		.sort((a, b) => {
-			const numA = parseFile(a).index;
-			const numB = parseFile(b).index;
+			const [numA, numB] = [parseFile(a), parseFile(b)].map((file) => file.index);
 
 			if (numA === -1) return 1;
 			if (numB === -1) return -1;
@@ -17,33 +17,27 @@ export function filterSongs(songs: string[], withoutIndexNumber: boolean = false
 			return numA - numB;
 		});
 
-	if (withoutIndexNumber) return out.map((x) => parseFile(x).filename + fileExt);
+	if (withoutIndexNumber) return out.map((x) => parseFile(x).filename + parseFile(x).filetype);
 
 	return out;
 }
 
 export function parseFile(filename: string): IParseFileOutput {
-	const name = filename
-		.split('. ')
-		.find((x) => x.endsWith('.mp3'))!
-		.replaceAll('.mp3', ''); // There is some cases that may have '.mp3.mp3'
-	const index = filename.match(/^(\d+)\.\s/);
-	if (!index)
-		return {
-			index: -1,
-			filename: name,
-			filetype: fileExt
-		};
+	const indexMatch = filename.match(/^(\d+)\.\s/);
+	const index = indexMatch ? Number(indexMatch[1]) : -1;
+
+	const filetype = fileExts.find((ext) => filename.endsWith(ext))!;
+	const name = filename.slice(0, -filetype.length).replace(/^\d+\.\s/, '');
 
 	return {
-		index: Number(index[1]),
+		index,
 		filename: name,
-		filetype: fileExt
+		filetype
 	};
 }
 
 interface IParseFileOutput {
 	index: number;
 	filename: string;
-	filetype: '.mp3';
+	filetype: (typeof fileExts)[number];
 }

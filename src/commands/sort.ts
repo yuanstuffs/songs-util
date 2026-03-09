@@ -1,11 +1,11 @@
 import { Command } from '#lib/structures';
 import { ApplyOptions } from '#utils/decorators';
-import { fileExt, getFileName } from '#utils/util';
+import { fileExts, getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
 import { envParseString } from '@skyra/env-utilities';
 import { rename } from 'node:fs/promises';
-import { pathToFileURL } from 'node:url';
+import { join } from 'node:path';
 
 @ApplyOptions<Command.Options>({
 	description: 'Sort the files in numerical order. Example: 1 to 100 (or beyond)'
@@ -28,18 +28,19 @@ export class UserCommand extends Command {
 			process.exit(1);
 		}
 
-		let i = 0;
+		// let i = 0;
 		let success = 0;
-		for (const file of files) {
+		for (let i = 0; i < files.length; i++) {
+			const file = files[i];
 			const filename = getFileName(file);
-			const originalFileURL = pathToFileURL(`${destination}/${file}`);
-			const index = ++i;
-			const dest = pathToFileURL(`${destination}/${index}. ${filename}${fileExt}`);
+			const originalFileURL = join(destination, file);
+			const index = i + 1;
+			const dest = join(destination, `${index}. ${filename}${fileExts.find((ext) => file.endsWith(ext))}`);
 			spinner.update({ text: `[${index}/${files.length}] Updating index number for ${filename}` });
 			const result = await Result.fromAsync(() => rename(originalFileURL, dest));
 			result.match({
 				ok: () => ++success && spinner.update({ text: `[${index}/${filename}] Updated index number from ${filename}` }),
-				err: () => spinner.error({ text: `Unknown error when updating number from ${filename}` })
+				err: (e) => spinner.error({ text: `Unknown error when updating number from ${filename}`, mark: e as string })
 			});
 		}
 

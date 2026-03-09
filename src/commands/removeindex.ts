@@ -1,6 +1,6 @@
 import { Command } from '#lib/structures';
 import { ApplyOptions } from '#utils/decorators';
-import { fileExt, getFileName } from '#utils/util';
+import { fileExts, getFileName } from '#utils/util';
 import { Spinner } from '@favware/colorette-spinner';
 import { Result } from '@sapphire/result';
 import { rename } from 'node:fs/promises';
@@ -43,7 +43,7 @@ export class UserCommand extends Command {
 			const filename = getFileName(file);
 			const originalFileURL = pathToFileURL(`${destination}/${file}`);
 			const index = ++i;
-			const dest = pathToFileURL(`${destination}/${filename}${fileExt}`);
+			const dest = pathToFileURL(`${destination}/${filename}${fileExts.find((ext) => file.endsWith(ext))}`);
 			spinner.update({ text: `[${index}/${files.length}] Removing index number for ${filename}` });
 			const result = await Result.fromAsync(() => rename(originalFileURL, dest));
 			result.match({

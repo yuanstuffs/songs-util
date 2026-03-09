@@ -11,16 +11,15 @@ import prompts, { type PromptObject } from 'prompts';
 	description: "Set a song's index to a specified index"
 })
 export class UserCommand extends Command {
-	public override async run(filename: string, index: string) {
+	public override async run(filename: string, index: string, src: string = this.srcDir) {
 		const spinner = new Spinner("Moving the file's index...").start();
 
-		if (!(await this.ensureDirExists(this.srcDir))) {
-			console.error(this.makePathNotExistsMessage(this.srcDir));
+		if (!(await this.ensureDirExists(src))) {
+			console.error(this.makePathNotExistsMessage(src));
 			process.exit(1);
 		}
 
-		const files = (await this.getFilesInDirectory()).filter((file) => parseFile(file).index !== -1);
-
+		const files = (await this.getFilesInDirectory(src)).filter((file) => parseFile(file).index !== -1);
 		if (!files.length) {
 			spinner.error({ text: 'No files to move.' });
 			process.exit(1);
@@ -33,7 +32,7 @@ export class UserCommand extends Command {
 			process.exit(1);
 		}
 
-		await this.insertAtIndex(files, Number(index), targetIndex, spinner);
+		await this.insertAtIndex(files, Number(index), targetIndex, src, spinner);
 	}
 
 	public override registerCommand(command: Command.CommanderCommand): Command.CommanderCommand {
@@ -41,10 +40,11 @@ export class UserCommand extends Command {
 			.alias('m')
 			.alias('mv')
 			.argument('<filename>', 'The file name (case sensitive)')
-			.argument('<index>', 'The index of the file to be set');
+			.argument('<index>', 'The index of the file to be set')
+			.argument('[src]', 'The directory containing the files to be sorted.');
 	}
 
-	private async insertAtIndex(files: string[], index: number, targetIndex: number, spinner: Spinner) {
+	private async insertAtIndex(files: string[], index: number, targetIndex: number, src: string, spinner: Spinner) {
 		spinner.stop();
 		const originalFile = files[targetIndex];
 		const parsedFile = parseFile(originalFile);
@@ -68,14 +68,14 @@ export class UserCommand extends Command {
 
 			const result = await Result.fromAsync(() =>
 				rename(
-					pathToFileURL(`${this.srcDir}/${f}`), //
-					pathToFileURL(`${this.srcDir}/${newName}`)
+					pathToFileURL(`${src}/${f}`), //
+					pathToFileURL(`${src}/${newName}`)
 				)
 			);
 
 			result.match({
 				ok: () => ++success && spinner.update({ text: `Renamed ${parsed.filename} to index ${ui}` }),
-				err: () => spinner.error({ text: `Unknown error when renaming ${parsed.filename} to ${ui}` })
+				err: (e: string) => spinner.error({ text: `Unknown error when renaming ${parsed.filename} to ${ui}`, mark: e })
 			});
 		}
 
