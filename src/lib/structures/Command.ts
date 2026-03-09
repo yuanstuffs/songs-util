@@ -20,7 +20,7 @@ export abstract class Command<Options extends Command.Options = Command.Options>
 			.description(options.description);
 	}
 
-	public abstract run(...args: string[]): Awaitable<void>;
+	public abstract run(...args: any[]): Awaitable<void>;
 
 	public abstract registerCommand(command: Command.CommanderCommand): Command.CommanderCommand;
 
@@ -45,11 +45,28 @@ export abstract class Command<Options extends Command.Options = Command.Options>
 		});
 	}
 
+	public async getFilesInDirectory(directory?: string, withoutIndexNumber?: boolean): Promise<Record<string, string[]>>;
+	public async getFilesInDirectory(directory?: string, withoutIndexNumber?: boolean, getSpecifiedDir?: string): Promise<string[]>;
 	public async getFilesInDirectory(
 		directory: string = this.srcDir, //
-		withoutIndexNumber: boolean = false
-	): Promise<string[]> {
-		return filterSongs(await readdir(pathToFileURL(directory), { encoding: 'utf-8' }), withoutIndexNumber);
+		withoutIndexNumber: boolean = false,
+		getSpecifiedDir?: string
+	): Promise<string[] | Record<string, string[]>> {
+		const result = filterSongs(
+			await readdir(pathToFileURL(directory), { encoding: 'utf-8', recursive: true, withFileTypes: true }),
+			withoutIndexNumber
+		);
+
+		if (getSpecifiedDir) {
+			const specifiedDir = result[getSpecifiedDir];
+			if (!specifiedDir) {
+				throw new Error(`Directory ${getSpecifiedDir} does not exist in ${directory}`);
+			}
+
+			return specifiedDir;
+		}
+
+		return result;
 	}
 
 	public makePathNotExistsMessage(path: string): string {

@@ -11,7 +11,7 @@ import prompts, { type PromptObject } from 'prompts';
 	description: "Set a song's index to a specified index"
 })
 export class UserCommand extends Command {
-	public override async run(filename: string, index: string, src: string = this.srcDir) {
+	public override async run(subdir: string, filename: string, index: string, src: string = this.srcDir) {
 		const spinner = new Spinner("Moving the file's index...").start();
 
 		if (!(await this.ensureDirExists(src))) {
@@ -19,7 +19,13 @@ export class UserCommand extends Command {
 			process.exit(1);
 		}
 
-		const files = (await this.getFilesInDirectory(src)).filter((file) => parseFile(file).index !== -1);
+		const files = (await this.getFilesInDirectory(src, false, subdir)).filter((file) => parseFile(file).index !== -1);
+
+		if (!files) {
+			spinner.error({ text: 'The specified directory does not exist. Exiting...' });
+			process.exit(1);
+		}
+
 		if (!files.length) {
 			spinner.error({ text: 'No files to move.' });
 			process.exit(1);
@@ -32,19 +38,20 @@ export class UserCommand extends Command {
 			process.exit(1);
 		}
 
-		await this.insertAtIndex(files, Number(index), targetIndex, src, spinner);
+		await this.insertAtIndex(files, Number(index), targetIndex, src, spinner, subdir);
 	}
 
 	public override registerCommand(command: Command.CommanderCommand): Command.CommanderCommand {
 		return command //
 			.alias('m')
 			.alias('mv')
+			.argument('<subdir>', 'The directory containing the files.')
 			.argument('<filename>', 'The file name (case sensitive)')
 			.argument('<index>', 'The index of the file to be set')
 			.argument('[src]', 'The directory containing the files to be sorted.');
 	}
 
-	private async insertAtIndex(files: string[], index: number, targetIndex: number, src: string, spinner: Spinner) {
+	private async insertAtIndex(files: string[], index: number, targetIndex: number, src: string, spinner: Spinner, folderName: string) {
 		spinner.stop();
 		const originalFile = files[targetIndex];
 		const parsedFile = parseFile(originalFile);
@@ -68,18 +75,18 @@ export class UserCommand extends Command {
 
 			const result = await Result.fromAsync(() =>
 				rename(
-					pathToFileURL(`${src}/${f}`), //
-					pathToFileURL(`${src}/${newName}`)
+					pathToFileURL(`${src}/${folderName}/${f}`), //
+					pathToFileURL(`${src}/${folderName}/${newName}`)
 				)
 			);
 
 			result.match({
-				ok: () => ++success && spinner.update({ text: `Renamed ${parsed.filename} to index ${ui}` }),
-				err: (e: string) => spinner.error({ text: `Unknown error when renaming ${parsed.filename} to ${ui}`, mark: e })
+				ok: () => ++success && spinner.update({ text: `[${folderName}] Renamed ${parsed.filename} to index ${ui}` }),
+				err: (e: string) => spinner.error({ text: `[${folderName}] Unknown error when renaming ${parsed.filename} to ${ui}`, mark: e })
 			});
 		}
 
-		if (success) spinner.success({ text: `Updated ${success} files.` });
+		if (success) spinner.success({ text: `[${folderName}] Updated ${success} files.` });
 	}
 
 	private makePrompts(filename: string): PromptObject<'confirm'> {

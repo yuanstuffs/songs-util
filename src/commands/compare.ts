@@ -1,7 +1,7 @@
 import { Command } from '#lib/structures';
 import { ApplyOptions } from '#utils/decorators';
 import { Spinner } from '@favware/colorette-spinner';
-import { gray, green, red, yellow } from 'colorette';
+import { blue, gray, green, red, yellow } from 'colorette';
 
 @ApplyOptions<Command.Options>({
 	description: [
@@ -10,7 +10,7 @@ import { gray, green, red, yellow } from 'colorette';
 	].join('\n')
 })
 export class UserCommand extends Command {
-	public override async run(targetDir: string) {
+	public override async run(targetDir: string, options: { dir?: string }) {
 		targetDir = this.resolvePath(targetDir);
 		const spinner = new Spinner(`Comparing files between src dir and ${targetDir}`).start();
 
@@ -27,12 +27,12 @@ export class UserCommand extends Command {
 		const srcFiles = await this.getFilesInDirectory();
 		const targetFiles = await this.getFilesInDirectory(targetDir);
 
-		if (!srcFiles.length) {
+		if (!Object.values(srcFiles).some((x) => x.length)) {
 			spinner.error({ text: 'The src directory does not have any files. Exiting...' });
 			process.exit(1);
 		}
 
-		if (!targetFiles.length) {
+		if (!Object.values(targetFiles).some((x) => x.length)) {
 			spinner.error({ text: 'The provided directory does not have any files. Exiting...' });
 			process.exit(1);
 		}
@@ -40,17 +40,21 @@ export class UserCommand extends Command {
 		spinner.stop();
 		spinner.clear();
 
-		const output = this.compare(srcFiles, targetFiles);
-		const totalDifferent = output.filteredArray1.length + output.filteredArray2.length;
-		this.formatOutput('### src directory', output.filteredArray1, output.filteredArray2);
-		this.formatOutput('### target directory', output.filteredArray2, output.filteredArray1);
-		console.log(yellow(`There is a total of ${totalDifferent} files missing between src and provided directory.`));
+		if (options.dir) {
+			this.doStuff(srcFiles[options.dir], targetFiles[options.dir], options.dir);
+			return;
+		}
+
+		for (const [folderName, files] of Object.entries(srcFiles)) {
+			this.doStuff(files, targetFiles[folderName] ?? [], folderName);
+		}
 	}
 
 	public override registerCommand(command: Command.CommanderCommand): Command.CommanderCommand {
 		return command //
 			.alias('diff')
-			.argument('<target_dir>', 'The directory to compare');
+			.argument('<target_dir>', 'The directory to compare')
+			.option('--dir <dir>', 'The sub-directory to compare files');
 	}
 
 	private compare(arr1: string[], arr2: string[]) {
@@ -64,5 +68,16 @@ export class UserCommand extends Command {
 		console.log(gray(title));
 		added.map((file) => console.log(gray('+ ') + green(file)));
 		removed.map((file) => console.log(gray('- ') + red(file)));
+	}
+
+	private doStuff(files: string[], targetFiles: string[], folderName: string) {
+		console.log(blue(`\n[${folderName}]`));
+
+		const output = this.compare(files, targetFiles);
+		const totalDifferent = output.filteredArray1.length + output.filteredArray2.length;
+		this.formatOutput('### src directory', output.filteredArray1, output.filteredArray2);
+		this.formatOutput('### target directory', output.filteredArray2, output.filteredArray1);
+		console.log(yellow(`There is a total of ${totalDifferent} files missing between src and provided directory.`));
+		console.log(gray('----------------------------------'));
 	}
 }
