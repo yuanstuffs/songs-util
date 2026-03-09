@@ -31,13 +31,13 @@ export class UserCommand extends Command {
 				process.exit(1);
 			}
 
-			this.doSearch(selectedDir, query.toLowerCase(), spinner, options.dir);
+			this.doSearch(selectedDir, query, spinner, options.dir);
 			return;
 		}
 
 		for (const [folderName, files_] of Object.entries(files)) {
 			spinner.update({ text: `Searching in ${folderName}...` });
-			this.doSearch(files_, query.toLowerCase(), spinner, folderName);
+			this.doSearch(files_, query, spinner, folderName);
 		}
 	}
 

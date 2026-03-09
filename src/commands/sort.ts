@@ -36,42 +36,13 @@ export class UserCommand extends Command {
 				process.exit(1);
 			}
 
-			let success = 0;
-			for (let i = 0; i < selectedDir.length; i++) {
-				const file = selectedDir[i];
-				const filename = getFileName(file);
-				const originalFileURL = join(destination, options.dir, file);
-				const index = i + 1;
-				const dest = join(destination, options.dir, `${index}. ${filename}${fileExts.find((ext) => file.endsWith(ext))}`);
-				spinner.update({ text: `[${options.dir}] [${index}/${selectedDir.length}] Updating index number for ${filename}` });
-				const result = await Result.fromAsync(() => rename(originalFileURL, dest));
-				result.match({
-					ok: () => ++success && spinner.update({ text: `[${options.dir}] [${index}/${selectedDir.length}] Updated index number from ${filename}` }),
-					err: (e) => spinner.error({ text: `[${options.dir}] Unknown error when updating number from ${filename}`, mark: e as string })
-				});
-			}
+			await this.doStuff(selectedDir, destination, spinner, options.dir);
 
-			if (success) spinner.success({ text: `[${options.dir}] Updated ${selectedDir.length} files of its index number in ${destination}` });
 			return;
 		}
 
-		let success = 0;
 		for (const [folderName, files_] of Object.entries(files)) {
-			for (let i = 0; i < files_.length; i++) {
-				const file = files_[i];
-				const filename = getFileName(file);
-				const originalFileURL = join(destination, folderName, file);
-				const index = i + 1;
-				const dest = join(destination, folderName, `${index}. ${filename}${fileExts.find((ext) => file.endsWith(ext))}`);
-				spinner.update({ text: `[${folderName}] [${index}/${files_[i].length}] Updating index number for ${filename}` });
-				const result = await Result.fromAsync(() => rename(originalFileURL, dest));
-				result.match({
-					ok: () => ++success && spinner.update({ text: `[${folderName}] [${index}/${files_[i].length}] Updated index number from ${filename}` }),
-					err: (e) => spinner.error({ text: `[${folderName}] Unknown error when updating number from ${filename}`, mark: e as string })
-				});
-			}
-
-			if (success) spinner.success({ text: `[${folderName}] Updated ${files_.length} files of its index number in ${destination}` });
+			await this.doStuff(files_, destination, spinner, folderName);
 		}
 	}
 
@@ -80,5 +51,24 @@ export class UserCommand extends Command {
 			.alias('st') //
 			.argument('[src]', 'The directory containing the files to be sorted.')
 			.option('--dir <dir>', 'The sub-directory to sort files');
+	}
+
+	private async doStuff(files: string[], destination: string, spinner: Spinner, folderName: string) {
+		let success = 0;
+		for (let i = 0; i < files.length; i++) {
+			const file = files[i];
+			const filename = getFileName(file);
+			const originalFileURL = join(destination, folderName, file);
+			const index = i + 1;
+			const dest = join(destination, folderName, `${index}. ${filename}${fileExts.find((ext) => file.endsWith(ext))}`);
+			spinner.update({ text: `[${folderName}] [${index}/${files.length}] Updating index number for ${filename}` });
+			const result = await Result.fromAsync(() => rename(originalFileURL, dest));
+			result.match({
+				ok: () => ++success && spinner.update({ text: `[${folderName}] [${index}/${files.length}] Updated index number from ${filename}` }),
+				err: (e) => spinner.error({ text: `[${folderName}] Unknown error when updating number from ${filename}`, mark: e as string })
+			});
+		}
+
+		if (success) spinner.success({ text: `[${folderName}] Updated ${files.length} files of its index number in ${destination}` });
 	}
 }

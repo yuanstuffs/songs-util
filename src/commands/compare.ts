@@ -46,7 +46,7 @@ export class UserCommand extends Command {
 		}
 
 		for (const [folderName, files] of Object.entries(srcFiles)) {
-			this.doStuff(files, targetFiles[folderName] ?? [], folderName);
+			this.doStuff(files, targetFiles[folderName], folderName);
 		}
 	}
 
